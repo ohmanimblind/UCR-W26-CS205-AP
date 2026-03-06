@@ -28,7 +28,8 @@ function DailyGraph() {
       return entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth;
     });
 
-    return monthlyRuns.reduce((total, entry) => total + entry.distance, 0);
+    const totalDistance = monthlyRuns.reduce((total, entry) => total + entry.distance, 0);
+    return typeof totalDistance === 'number' ? totalDistance : 0;
   }, [runEntries]);
 
   return (
