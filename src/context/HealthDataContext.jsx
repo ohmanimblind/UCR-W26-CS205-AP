@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useRef } from 'react';
 import { createFile, openFile, writeFile, readFile } from '../utils/fileOperations';
 import { loadData, saveData, saveFileHandleInfo, getFileHandleInfo } from '../utils/storage';
 
