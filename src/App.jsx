@@ -73,7 +73,7 @@ function App() {
                 }`}
                 onClick={() => setActiveTab('mood')}
               >
-                Mood Tracker
+                Log Run
               </button>
             </nav>
             <div className="mt-8">
