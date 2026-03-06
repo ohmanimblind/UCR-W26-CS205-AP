@@ -4,6 +4,7 @@ import DailyGraph from './components/DailyGraph';
 import FileManager from './components/FileManager';
 import HistoryView from './components/HistoryView';
 import WeeklyGraph from './components/WeeklyGraph';
+import MoodTracker from './modules/MoodTracker';
 
 function ErrorBoundary({ children }) {
   const [hasError, setHasError] = useState(false);
@@ -66,11 +67,20 @@ function App() {
               >
                 File
               </button>
+              <button
+                className={`px-4 py-2 rounded bg-blue-500 text-white ${
+                  activeTab === 'mood' ? 'bg-blue-700' : ''
+                }`}
+                onClick={() => setActiveTab('mood')}
+              >
+                Mood Tracker
+              </button>
             </nav>
             <div className="mt-8">
               {activeTab === 'dashboard' && <DailyGraph />}
               {activeTab === 'history' && <HistoryView />}
               {activeTab === 'file' && <FileManager />}
+              {activeTab === 'mood' && <MoodTracker />}
             </div>
           </div>
         </div>

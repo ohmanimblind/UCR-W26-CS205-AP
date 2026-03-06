@@ -58,7 +58,7 @@ function FileManager() {
   };
 
   const handleClear = () => {
-    if (window.confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+    if (window.confirm('Are you sure you want to clear all run data? This cannot be undone.')) {
       importData(JSON.stringify({ runEntries: [] }));
       setImportText('');
       setImportSuccess(true);
@@ -70,7 +70,7 @@ function FileManager() {
     <div>
       <h2 className="text-2xl font-bold mb-4">File Manager</h2>
       <button className="px-4 py-2 bg-blue-500 text-white rounded mb-4" onClick={handleExport}>
-        Export Data
+        Export Run Data
       </button>
       <input
         type="file"
@@ -84,12 +84,12 @@ function FileManager() {
         className="w-full p-2 border rounded mb-4"
       />
       {importError && <p className="text-red-500 mb-4">{importError}</p>}
-      {importSuccess && <p className="text-green-500 mb-4">Data imported successfully!</p>}
+      {importSuccess && <p className="text-green-500 mb-4">Run data imported successfully!</p>}
       <button
         className="px-4 py-2 bg-red-500 text-white rounded"
         onClick={handleClear}
       >
-        Clear Data
+        Clear Run Data
       </button>
     </div>
   );
