@@ -4,6 +4,8 @@ import { useHealthData } from '../context/HealthDataContext';
 function HistoryView() {
   const { runEntries } = useHealthData();
 
+  console.log('runEntries:', runEntries); // Debugging statement
+
   const sortedEntries = useMemo(() => {
     return [...runEntries].sort((a, b) => b.id - a.id);
   }, [runEntries]);
