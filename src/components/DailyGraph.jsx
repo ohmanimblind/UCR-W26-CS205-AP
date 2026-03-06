@@ -12,6 +12,7 @@ function DailyGraph() {
       .map(entry => ({
         time: entry.time,
         distance: entry.distance,
+        pace: entry.pace,
       }));
 
     return todayRuns;
@@ -25,6 +26,7 @@ function DailyGraph() {
           <li key={index} className="flex justify-between items-center mb-2">
             <span>{entry.time}</span>
             <span>{entry.distance} miles</span>
+            <span>{entry.pace.toFixed(2)} min/mile</span>
           </li>
         ))}
       </ul>
