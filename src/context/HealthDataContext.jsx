@@ -6,6 +6,7 @@ const HealthDataContext = createContext();
 
 export function HealthDataProvider({ children }) {
   const [runEntries, setRunEntries] = useState([]);
+  const [monthlyGoal, setMonthlyGoal] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [fileHandle, setFileHandle] = useState(null);
   const [fileStatus, setFileStatus] = useState('none'); // 'none', 'saving', 'saved', 'error'
@@ -17,6 +18,7 @@ export function HealthDataProvider({ children }) {
       // Load from localStorage first
       const loaded = loadData();
       setRunEntries(loaded.runEntries);
+      setMonthlyGoal(loaded.monthlyGoal || 0);
       setIsLoaded(true);
 
       // Try to set up file auto-save
@@ -43,6 +45,7 @@ export function HealthDataProvider({ children }) {
     setFileStatus('saving');
     const success = await writeFile(handle, {
       runEntries,
+      monthlyGoal,
       lastSaved: new Date().toISOString()
     });
 
@@ -78,6 +81,9 @@ export function HealthDataProvider({ children }) {
       if (data?.runEntries) {
         setRunEntries(data.runEntries);
       }
+      if (data?.monthlyGoal) {
+        setMonthlyGoal(data.monthlyGoal);
+      }
     }
   }
 
@@ -100,6 +106,7 @@ export function HealthDataProvider({ children }) {
   const exportData = () => {
     const data = {
       runEntries,
+      monthlyGoal,
       exportedAt: new Date().toISOString(),
     };
     return JSON.stringify(data, null, 2);
@@ -111,9 +118,11 @@ export function HealthDataProvider({ children }) {
       const data = JSON.parse(jsonString);
       if (data.runEntries && Array.isArray(data.runEntries)) {
         setAllData(data.runEntries);
-        return true;
       }
-      return false;
+      if (data.monthlyGoal) {
+        setMonthlyGoal(data.monthlyGoal);
+      }
+      return true;
     } catch (error) {
       console.error('Error importing data:', error);
       return false;
@@ -124,6 +133,7 @@ export function HealthDataProvider({ children }) {
     <HealthDataContext.Provider
       value={{
         runEntries,
+        monthlyGoal,
         isLoaded,
         fileHandle,
         fileStatus,

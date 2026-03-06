@@ -1,5 +1,5 @@
-const STORAGE_KEY = 'run-tracking-data';
-const FILE_HANDLE_KEY = 'run-tracking-file-handle';
+const STORAGE_KEY = 'runTrackerData';
+const FILE_HANDLE_KEY = 'runTrackerFileHandle';
 
 export function loadData() {
   try {
@@ -8,17 +8,18 @@ export function loadData() {
       const data = JSON.parse(stored);
       return {
         runEntries: data.runEntries || [],
+        monthlyGoal: data.monthlyGoal || 0,
       };
     }
   } catch (error) {
     console.error('Error loading data from localStorage:', error);
   }
-  return { runEntries: [] };
+  return { runEntries: [], monthlyGoal: 0 };
 }
 
-export function saveData(runEntries) {
+export function saveData(runEntries, monthlyGoal) {
   try {
-    const data = { runEntries };
+    const data = { runEntries, monthlyGoal };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
     console.error('Error saving data to localStorage:', error);
