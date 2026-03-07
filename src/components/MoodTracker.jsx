@@ -3,7 +3,7 @@ import { useHealthData } from '../context/HealthDataContext';
 
 function MoodTracker() {
   const { addRunEntry } = useHealthData();
-  const [selectedHours, setSelectedHours] = useState('');
+  const [selectedHours, setSelectedHours] = useState('0');
   const [selectedMinutes, setSelectedMinutes] = useState('0'); // Default to 0 minutes
   const [selectedDistance, setSelectedDistance] = useState('');
 
@@ -13,14 +13,15 @@ function MoodTracker() {
     if (!selectedDistance) return;
 
     const now = new Date();
-    const totalMinutes = (parseInt(selectedHours, 10) || 0) * 60 + parseInt(selectedMinutes, 10);
+    const totalMinutes = (parseInt(selectedHours, 10) || 0) * 60 + (parseInt(selectedMinutes, 10) || 0);
     const distance = parseFloat(selectedDistance);
+    console.log("totalMinutes: ", totalMinutes);
+    console.log("distance: ", distance);
 
     if (isNaN(distance) || totalMinutes === 0) {
       console.error('Distance must be a number and time must be greater than 0');
       return;
     }
-
     const pace = totalMinutes / distance;
 
     const newEntry = {
@@ -32,7 +33,7 @@ function MoodTracker() {
     };
 
     addRunEntry(newEntry);
-    setSelectedHours('');
+    setSelectedHours('0');
     setSelectedMinutes('0'); // Reset to default
     setSelectedDistance('');
   };
@@ -41,7 +42,7 @@ function MoodTracker() {
     if (window.confirm('Are you sure you want to clear all run data? This cannot be undone.')) {
       // Assuming deleteRunEntry is available in the context
       // deleteRunEntry();
-      setSelectedHours('');
+      setSelectedHours('0');
       setSelectedMinutes('0'); // Reset to default
       setSelectedDistance('');
     }
@@ -83,7 +84,7 @@ function MoodTracker() {
         </div>
         <div className="flex justify-end">
           <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-            Log Run
+            Log Run Now
           </button>
           <button type="button" onClick={handleClear} className="ml-2 px-4 py-2 bg-red-500 text-white rounded">
             Clear

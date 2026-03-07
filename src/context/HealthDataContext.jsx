@@ -145,6 +145,7 @@ export function HealthDataProvider({ children }) {
       const entryDate = new Date(entry.date);
       if (entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth) {
         return total + parseFloat(entry.distance);
+      
       }
       return total;
     }, 0);
