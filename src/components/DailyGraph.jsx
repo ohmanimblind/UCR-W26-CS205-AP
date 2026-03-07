@@ -33,7 +33,8 @@ function DailyGraph() {
     if (filteredEntries.length === 0) return 'No runs this month';
 
     const fastestPace = filteredEntries.reduce((minPace, entry) => {
-      const pace = entry.distance / entry.time;
+      const distance = parseFloat(entry.distance);
+      const pace = distance / entry.time;
       return pace < minPace ? pace : minPace;
     }, Infinity);
 
@@ -59,7 +60,8 @@ function DailyGraph() {
     if (filteredEntries.length === 0) return 'No runs this month';
 
     const longestRun = filteredEntries.reduce((maxDistance, entry) => {
-      return entry.distance > maxDistance ? entry.distance : maxDistance;
+      const distance = parseFloat(entry.distance);
+      return distance > maxDistance ? distance : maxDistance;
     }, 0);
 
     console.log('longestRun:', longestRun);
