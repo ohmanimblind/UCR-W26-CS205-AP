@@ -32,11 +32,12 @@ function DailyGraph() {
 
     if (filteredEntries.length === 0) return 'No runs this month';
 
+    const initialMinPace = filteredEntries[0].time !== 0 ? filteredEntries[0].distance / filteredEntries[0].time : Infinity;
     const fastestPace = filteredEntries.reduce((minPace, entry) => {
       const distance = parseFloat(entry.distance);
       const pace = distance / entry.time;
       return pace < minPace ? pace : minPace;
-    }, Infinity);
+    }, initialMinPace);
 
     console.log('fastestPace:', fastestPace);
 
