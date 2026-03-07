@@ -4,28 +4,36 @@ import { useHealthData } from '../context/HealthDataContext';
 function MoodTracker() {
   const { runEntries, addRunEntry, deleteRunEntry } = useHealthData();
   const [selectedHours, setSelectedHours] = useState('');
-  const [selectedMinutes, setSelectedMinutes] = useState('');
+  const [selectedMinutes, setSelectedMinutes] = useState('0'); // Default to 0 minutes
   const [selectedDistance, setSelectedDistance] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
-    if (!selectedMinutes || !selectedDistance) return;
+    if (!selectedDistance) return;
 
     const now = new Date();
     const totalMinutes = (parseInt(selectedHours, 10) || 0) * 60 + (parseInt(selectedMinutes, 10) || 0);
+    const distance = parseFloat(selectedDistance);
+
+    if (isNaN(distance) || totalMinutes === 0) {
+      console.error('Distance must be a number and time must be greater than 0');
+      return;
+    }
+
+    const pace = totalMinutes / distance;
 
     const newEntry = {
       id: Date.now(),
       time: `${selectedHours ? selectedHours : '0'}:${selectedMinutes}`,
-      distance: selectedDistance,
+      distance,
       date: now.toISOString().split('T')[0],
-      pace: totalMinutes / selectedDistance,
+      pace: pace.toFixed(2),
     };
 
     addRunEntry(newEntry);
     setSelectedHours('');
-    setSelectedMinutes('');
+    setSelectedMinutes('0'); // Reset to default
     setSelectedDistance('');
   };
 
@@ -33,7 +41,7 @@ function MoodTracker() {
     if (window.confirm('Are you sure you want to clear all run data? This cannot be undone.')) {
       deleteRunEntry();
       setSelectedHours('');
-      setSelectedMinutes('');
+      setSelectedMinutes('0'); // Reset to default
       setSelectedDistance('');
     }
   };
