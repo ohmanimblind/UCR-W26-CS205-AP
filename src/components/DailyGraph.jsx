@@ -54,7 +54,7 @@ function DailyGraph() {
       return entry.distance > maxDistance ? entry.distance : maxDistance;
     }, 0);
 
-    return longestRun !== 0 ? longestRun.toFixed(2) : 'No runs this month';
+    return typeof longestRun === 'number' && !isNaN(longestRun) ? longestRun.toFixed(2) : 'No runs this month';
   }, [runEntries]);
 
   return (
