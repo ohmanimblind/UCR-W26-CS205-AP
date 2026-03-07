@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { HealthDataProvider } from './context/HealthDataContext';
 import DailyGraph from './components/DailyGraph';
 import MoodTracker from './modules/MoodTracker';
+import HistoryView from './components/HistoryView';
+import FileManager from './components/FileManager';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -25,11 +27,25 @@ function App() {
               >
                 Log Run
               </button>
+              <button
+                onClick={() => setActiveTab('history')}
+                className={`px-4 py-2 rounded ${activeTab === 'history' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+              >
+                History
+              </button>
+              <button
+                onClick={() => setActiveTab('file')}
+                className={`px-4 py-2 rounded ${activeTab === 'file' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+              >
+                File
+              </button>
             </nav>
           </header>
           <main>
             {activeTab === 'dashboard' && <DailyGraph />}
             {activeTab === 'log-run' && <MoodTracker />}
+            {activeTab === 'history' && <HistoryView />}
+            {activeTab === 'file' && <FileManager />}
           </main>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHealthData } from '../context/HealthDataContext';
 
 function FileManager() {
@@ -51,9 +51,8 @@ function FileManager() {
     const success = importData(jsonString);
     if (success) {
       setImportSuccess(true);
-      setTimeout(() => setImportSuccess(false), 3000);
     } else {
-      setImportError('Invalid JSON data');
+      setImportError('Error importing data');
     }
   };
 
@@ -68,29 +67,34 @@ function FileManager() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">File Manager</h2>
-      <button className="px-4 py-2 bg-blue-500 text-white rounded mb-4" onClick={handleExport}>
-        Export Run Data
-      </button>
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileSelect}
-        className="mb-4"
-      />
-      <textarea
-        value={importText}
-        onChange={(e) => setImportText(e.target.value)}
-        className="w-full p-2 border rounded mb-4"
-      />
-      {importError && <p className="text-red-500 mb-4">{importError}</p>}
-      {importSuccess && <p className="text-green-500 mb-4">Run data imported successfully!</p>}
-      <button
-        className="px-4 py-2 bg-red-500 text-white rounded"
-        onClick={handleClear}
-      >
-        Clear Run Data
-      </button>
+      <h2 className="text-2xl font-bold mb-4">File Management</h2>
+      <div className="mb-4">
+        <button onClick={handleExport} className="bg-blue-500 text-white p-2 rounded">
+          Export Data
+        </button>
+      </div>
+      <div className="mb-4">
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileSelect}
+          className="p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div className="mb-4">
+        <textarea
+          value={importText}
+          onChange={(e) => setImportText(e.target.value)}
+          className="p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div className="mb-4">
+        <button onClick={handleImport} className="bg-blue-500 text-white p-2 rounded">
+          Import Data
+        </button>
+      </div>
+      {importError && <p className="text-red-500">{importError}</p>}
+      {importSuccess && <p className="text-green-500">Data imported successfully!</p>}
     </div>
   );
 }
