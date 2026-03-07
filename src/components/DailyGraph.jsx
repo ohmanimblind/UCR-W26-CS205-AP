@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useHealthData } from '../context/HealthDataContext';
 
 function DailyGraph() {
