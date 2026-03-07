@@ -27,9 +27,6 @@ function DailyGraph() {
       return entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth;
     });
 
-    console.log('runEntries:', runEntries);
-    console.log('filteredEntries:', filteredEntries);
-
     if (filteredEntries.length === 0) return 'No runs this month';
 
     const initialMinPace = Infinity;
@@ -37,8 +34,6 @@ function DailyGraph() {
       const pace = entry.pace;
       return pace < minPace ? pace : minPace;
     }, initialMinPace);
-
-    console.log('fastestPace:', fastestPace);
 
     return fastestPace !== Infinity ? fastestPace.toFixed(2) : 'No runs this month';
   }, [runEntries]);
@@ -54,9 +49,6 @@ function DailyGraph() {
       return entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth;
     });
 
-    console.log('runEntries:', runEntries);
-    console.log('filteredEntries:', filteredEntries);
-
     if (filteredEntries.length === 0) return 'No runs this month';
 
     const longestRun = filteredEntries.reduce((maxDistance, entry) => {
@@ -64,9 +56,29 @@ function DailyGraph() {
       return distance > maxDistance ? distance : maxDistance;
     }, 0);
 
-    console.log('longestRun:', longestRun);
-
     return typeof longestRun === 'number' && !isNaN(longestRun) ? longestRun.toFixed(2) : 'No runs this month';
+  }, [runEntries]);
+
+  // Calculate fastest pace of the week
+  const fastestPaceThisWeek = useMemo(() => {
+    const now = new Date();
+    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+    const endOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 6);
+
+    const filteredEntries = runEntries.filter(entry => {
+      const entryDate = new Date(entry.date);
+      return entryDate >= startOfWeek && entryDate <= endOfWeek;
+    });
+
+    if (filteredEntries.length === 0) return 'No runs this week';
+
+    const initialMinPace = Infinity;
+    const fastestPace = filteredEntries.reduce((minPace, entry) => {
+      const pace = entry.pace;
+      return pace < minPace ? pace : minPace;
+    }, initialMinPace);
+
+    return fastestPace !== Infinity ? fastestPace.toFixed(2) : 'No runs this week';
   }, [runEntries]);
 
   return (
@@ -93,6 +105,10 @@ function DailyGraph() {
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-2">Longest Run of the Month</h3>
         <p>{longestRunThisMonth} miles</p>
+      </div>
+      <div className="mt-8">
+        <h3 className="text-xl font-bold mb-2">Fastest Pace of the Week</h3>
+        <p>{fastestPaceThisWeek} miles per hour</p>
       </div>
     </div>
   );
