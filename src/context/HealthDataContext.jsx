@@ -17,6 +17,7 @@ export function HealthDataProvider({ children }) {
     async function initialize() {
       // Load from localStorage first
       const loaded = loadData();
+      console.log('Loaded data:', loaded);
       setRunEntries(loaded.runEntries);
       setMonthlyGoal(loaded.monthlyGoal || 0);
       setIsLoaded(true);
@@ -78,6 +79,7 @@ export function HealthDataProvider({ children }) {
       saveFileHandleInfo(handle);
 
       const data = await readFile(handle);
+      console.log('Data read from file:', data);
       if (data?.runEntries) {
         setRunEntries(data.runEntries);
       }
@@ -89,16 +91,19 @@ export function HealthDataProvider({ children }) {
 
   // Add a new run entry
   const addRunEntry = (entry) => {
+    console.log('Adding run entry:', entry);
     setRunEntries([...runEntries, entry]);
   };
 
   // Delete a run entry
   const deleteRunEntry = (id) => {
+    console.log('Deleting run entry with id:', id);
     setRunEntries(runEntries.filter(entry => entry.id !== id));
   };
 
   // Set all data
   const setAllData = (runEntries) => {
+    console.log('Setting all data:', runEntries);
     setRunEntries(runEntries);
   };
 
@@ -116,6 +121,7 @@ export function HealthDataProvider({ children }) {
   const importData = (jsonString) => {
     try {
       const data = JSON.parse(jsonString);
+      console.log('Importing data:', data);
       if (data.runEntries && Array.isArray(data.runEntries)) {
         setAllData(data.runEntries);
       }
@@ -135,13 +141,16 @@ export function HealthDataProvider({ children }) {
     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-    return runEntries.reduce((total, entry) => {
+    const total = runEntries.reduce((total, entry) => {
       const entryDate = new Date(entry.date);
       if (entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth) {
         return total + entry.distance;
       }
       return total;
     }, 0);
+
+    console.log('Total distance this month:', total);
+    return total;
   }, [runEntries]);
 
   return (
