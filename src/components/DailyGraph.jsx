@@ -27,7 +27,7 @@ function DailyGraph() {
       return entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth;
     });
 
-    if (filteredEntries.length === 0) return null;
+    if (filteredEntries.length === 0) return 'No runs this month';
 
     const fastestPace = filteredEntries.reduce((minPace, entry) => {
       const pace = entry.distance / entry.time;
@@ -48,7 +48,7 @@ function DailyGraph() {
       return entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth;
     });
 
-    if (filteredEntries.length === 0) return null;
+    if (filteredEntries.length === 0) return 'No runs this month';
 
     const longestRun = filteredEntries.reduce((maxDistance, entry) => {
       return entry.distance > maxDistance ? entry.distance : maxDistance;
@@ -76,11 +76,11 @@ function DailyGraph() {
       </div>
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-2">Fastest Pace of the Month</h3>
-        <p>{fastestPaceThisMonth ? `${fastestPaceThisMonth} miles per hour` : 'No runs this month'}</p>
+        <p>{fastestPaceThisMonth} miles per hour</p>
       </div>
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-2">Longest Run of the Month</h3>
-        <p>{longestRunThisMonth ? `${longestRunThisMonth} miles` : 'No runs this month'}</p>
+        <p>{longestRunThisMonth} miles</p>
       </div>
     </div>
   );
