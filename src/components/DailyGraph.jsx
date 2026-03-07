@@ -54,7 +54,7 @@ function DailyGraph() {
       return entry.distance > maxDistance ? entry.distance : maxDistance;
     }, 0);
 
-    return longestRun.toFixed(2);
+    return typeof longestRun === 'number' ? longestRun.toFixed(2) : '0.00';
   }, [runEntries]);
 
   return (
