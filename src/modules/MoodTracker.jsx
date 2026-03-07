@@ -87,7 +87,7 @@ function MoodTracker() {
             <li key={entry.id} className="flex justify-between items-center mb-2">
               <span>{entry.time}</span>
               <span>{entry.distance} miles</span>
-              <span>{entry.pace.toFixed(2)} min/mile</span>
+              <span>{typeof entry.pace === 'number' ? entry.pace.toFixed(2) : 'N/A'} min/mile</span>
               <button
                 onClick={() => deleteRunEntry(entry.id)}
                 className="bg-red-500 text-white p-2 rounded"
