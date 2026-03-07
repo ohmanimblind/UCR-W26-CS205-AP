@@ -171,15 +171,30 @@ function DailyGraph() {
       </div>
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-2">Fastest Pace of the Month</h3>
-        <p>{fastestPaceThisMonth} miles per hour</p>
+        {fastestPaceThisMonth !== 'No runs this month' && (
+          <p>{fastestPaceThisMonth} miles per hour</p>
+        )}
+        {fastestPaceThisMonth === 'No runs this month' && (
+          <p>{fastestPaceThisMonth}</p>
+        )}
       </div>
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-2">Longest Run of the Month</h3>
-        <p>{longestRunThisMonth} miles</p>
+        {longestRunThisMonth !== 'No runs this month' && (
+          <p>{longestRunThisMonth} miles</p>
+        )}
+        {longestRunThisMonth === 'No runs this month' && (
+          <p>{longestRunThisMonth}</p>
+        )}
       </div>
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-2">Fastest Pace of the Week</h3>
-        <p>{fastestPaceThisWeek} miles per hour</p>
+        {fastestPaceThisWeek !== 'No runs this week' && (
+          <p>{fastestPaceThisWeek} miles per hour</p>
+        )}
+        {fastestPaceThisWeek === 'No runs this week' && (
+          <p>{fastestPaceThisWeek}</p>
+        )}
       </div>
       {recommendedRun && (
         <div className="mt-8">
