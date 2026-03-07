@@ -82,6 +82,16 @@ function DailyGraph() {
     return fastestPace !== Infinity ? fastestPace.toFixed(2) : 'No runs this week';
   }, [runEntries]);
 
+  // Calculate baseline distance and tempo pace
+  const baselineDistance = useMemo(() => monthlyGoal / 20, [monthlyGoal]);
+  const averagePace = useMemo(() => {
+    if (runEntries.length === 0) return 9; // Default to 9 minutes per mile if no runs
+    const totalPace = runEntries.reduce((sum, entry) => sum + parseFloat(entry.pace), 0);
+    return (totalPace / runEntries.length) - 0.5; // Subtract 30 seconds (0.5 minutes)
+  }, [runEntries]);
+
+  const tempoPace = useMemo(() => Math.min(9, averagePace), [averagePace]);
+
   // Check for runs in the past 3 days
   useEffect(() => {
     const now = new Date();
@@ -94,13 +104,43 @@ function DailyGraph() {
     });
 
     if (recentEntries.length === 0) {
-      const recommendedDistance = monthlyGoal / 20;
-      const recommendedPace = 9; // 9 minutes per mile
-      setRecommendedRun({ distance: recommendedDistance, pace: recommendedPace });
+      // Step 2: Evaluate the 3-Day Inactivity Rule
+      setRecommendedRun({
+        distance: baselineDistance,
+        pace: 9,
+        message: 'Ease back into your routine with a base-building run.'
+      });
     } else {
-      setRecommendedRun(null);
+      const yesterdayEntry = recentEntries[0];
+      const yesterdayDate = new Date(yesterdayEntry.date);
+      const isYesterday = yesterdayDate.toDateString() === now.toDateString();
+
+      if (isYesterday) {
+        // Step 3: Evaluate Yesterday's Run for Recovery
+        if (parseFloat(yesterdayEntry.distance) >= baselineDistance && parseFloat(yesterdayEntry.pace) <= tempoPace) {
+          setRecommendedRun({
+            distance: baselineDistance * 0.75,
+            pace: 10, // Slower pace than 9 minutes per mile
+            message: 'Take it easy today to recover from yesterday\'s hard effort.'
+          });
+        } else {
+          // Step 4: Evaluate Yesterday's Run for Tempo
+          setRecommendedRun({
+            distance: baselineDistance,
+            pace: tempoPace,
+            message: 'Push your pace today with a tempo run.'
+          });
+        }
+      } else {
+        // Step 5: Fallback Condition
+        setRecommendedRun({
+          distance: baselineDistance,
+          pace: 9,
+          message: 'Keep your momentum going with a standard run.'
+        });
+      }
     }
-  }, [runEntries, monthlyGoal]);
+  }, [runEntries, monthlyGoal, baselineDistance, tempoPace]);
 
   return (
     <div className="mt-8">
@@ -146,6 +186,7 @@ function DailyGraph() {
           <h3 className="text-xl font-bold mb-2">Recommended Run</h3>
           <p>Distance: {recommendedRun.distance.toFixed(2)} miles</p>
           <p>Pace: {recommendedRun.pace} minutes per mile</p>
+          <p>{recommendedRun.message}</p>
         </div>
       )}
     </div>
