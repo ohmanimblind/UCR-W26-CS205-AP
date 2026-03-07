@@ -13,7 +13,7 @@ function MoodTracker() {
     if (!selectedDistance) return;
 
     const now = new Date();
-    const totalMinutes = parseInt(selectedHours, 10) * 60 + parseInt(selectedMinutes, 10);
+    const totalMinutes = (parseInt(selectedHours, 10) || 0) * 60 + parseInt(selectedMinutes, 10);
     const distance = parseFloat(selectedDistance);
 
     if (isNaN(distance) || totalMinutes === 0) {
