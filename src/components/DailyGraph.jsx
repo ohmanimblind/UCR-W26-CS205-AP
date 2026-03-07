@@ -34,7 +34,7 @@ function DailyGraph() {
       return pace < minPace ? pace : minPace;
     }, Infinity);
 
-    return fastestPace.toFixed(2);
+    return fastestPace !== Infinity ? fastestPace.toFixed(2) : 'No runs this month';
   }, [runEntries]);
 
   // Calculate longest run of the month
@@ -54,7 +54,7 @@ function DailyGraph() {
       return entry.distance > maxDistance ? entry.distance : maxDistance;
     }, 0);
 
-    return typeof longestRun === 'number' ? longestRun.toFixed(2) : '0.00';
+    return longestRun !== 0 ? longestRun.toFixed(2) : 'No runs this month';
   }, [runEntries]);
 
   return (
