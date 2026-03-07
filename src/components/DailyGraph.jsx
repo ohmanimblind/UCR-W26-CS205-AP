@@ -27,12 +27,17 @@ function DailyGraph() {
       return entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth;
     });
 
+    console.log('runEntries:', runEntries);
+    console.log('filteredEntries:', filteredEntries);
+
     if (filteredEntries.length === 0) return 'No runs this month';
 
     const fastestPace = filteredEntries.reduce((minPace, entry) => {
       const pace = entry.distance / entry.time;
       return pace < minPace ? pace : minPace;
     }, Infinity);
+
+    console.log('fastestPace:', fastestPace);
 
     return fastestPace !== Infinity ? fastestPace.toFixed(2) : 'No runs this month';
   }, [runEntries]);
@@ -48,11 +53,16 @@ function DailyGraph() {
       return entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth;
     });
 
+    console.log('runEntries:', runEntries);
+    console.log('filteredEntries:', filteredEntries);
+
     if (filteredEntries.length === 0) return 'No runs this month';
 
     const longestRun = filteredEntries.reduce((maxDistance, entry) => {
       return entry.distance > maxDistance ? entry.distance : maxDistance;
     }, 0);
+
+    console.log('longestRun:', longestRun);
 
     return typeof longestRun === 'number' && !isNaN(longestRun) ? longestRun.toFixed(2) : 'No runs this month';
   }, [runEntries]);
