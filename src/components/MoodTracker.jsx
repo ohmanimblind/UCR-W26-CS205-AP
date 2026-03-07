@@ -4,7 +4,7 @@ import { useHealthData } from '../context/HealthDataContext';
 function MoodTracker() {
   const { addRunEntry } = useHealthData();
   const [selectedHours, setSelectedHours] = useState('');
-  const [selectedMinutes, setSelectedMinutes] = useState('');
+  const [selectedMinutes, setSelectedMinutes] = useState('0'); // Default to 0 minutes
   const [selectedDistance, setSelectedDistance] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
 
@@ -32,7 +32,7 @@ function MoodTracker() {
 
     addRunEntry(newEntry);
     setSelectedHours('');
-    setSelectedMinutes('');
+    setSelectedMinutes('0'); // Reset to default
     setSelectedDistance('');
     setSelectedTime('');
   };
@@ -42,7 +42,7 @@ function MoodTracker() {
       // Assuming deleteRunEntry is available in the context
       // deleteRunEntry();
       setSelectedHours('');
-      setSelectedMinutes('');
+      setSelectedMinutes('0'); // Reset to default
       setSelectedDistance('');
       setSelectedTime('');
     }
