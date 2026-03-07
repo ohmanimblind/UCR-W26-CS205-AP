@@ -13,14 +13,15 @@ function MoodTracker() {
     if (!selectedMinutes || !selectedDistance) return;
 
     const now = new Date();
-    const totalMinutes = (parseInt(selectedHours, 10) || 0) * 60 + (parseInt(selectedMinutes, 10) || 0);
-
+    const totalMinutes = (parseInt(selectedHours, 10) || 0) * 60 + (parseFloat(selectedMinutes) || 0);
+    
+    const calc_pace = totalMinutes / selectedDistance;
     const newEntry = {
       id: Date.now(),
       time: `${selectedHours ? selectedHours : '0'}:${selectedMinutes}`,
       distance: selectedDistance,
       date: now.toISOString().split('T')[0],
-      pace: totalMinutes / selectedDistance,
+      pace: Number(calc_pace.toFixed(2)),
     };
 
     addRunEntry(newEntry);
