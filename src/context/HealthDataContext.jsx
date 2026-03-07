@@ -144,7 +144,7 @@ export function HealthDataProvider({ children }) {
     const total = runEntries.reduce((total, entry) => {
       const entryDate = new Date(entry.date);
       if (entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth) {
-        return total + entry.distance;
+        return total + parseFloat(entry.distance);
       }
       return total;
     }, 0);
