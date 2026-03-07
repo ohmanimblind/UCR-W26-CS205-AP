@@ -129,6 +129,21 @@ export function HealthDataProvider({ children }) {
     }
   };
 
+  // Calculate total distance for the current month
+  const totalDistanceThisMonth = useMemo(() => {
+    const now = new Date();
+    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    return runEntries.reduce((total, entry) => {
+      const entryDate = new Date(entry.date);
+      if (entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth) {
+        return total + entry.distance;
+      }
+      return total;
+    }, 0);
+  }, [runEntries]);
+
   return (
     <HealthDataContext.Provider
       value={{
@@ -144,6 +159,7 @@ export function HealthDataProvider({ children }) {
         importData,
         setupFileHandle,
         loadFromFile,
+        totalDistanceThisMonth,
       }}
     >
       {children}
