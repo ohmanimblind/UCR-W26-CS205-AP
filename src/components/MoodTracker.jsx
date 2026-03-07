@@ -6,35 +6,35 @@ function MoodTracker() {
   const [selectedHours, setSelectedHours] = useState('');
   const [selectedMinutes, setSelectedMinutes] = useState('0'); // Default to 0 minutes
   const [selectedDistance, setSelectedDistance] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
-    if (!selectedMinutes || !selectedDistance || !selectedTime) return;
+    if (!selectedDistance) return;
 
     const now = new Date();
     const totalMinutes = parseInt(selectedHours, 10) * 60 + parseInt(selectedMinutes, 10);
     const distance = parseFloat(selectedDistance);
-    const time = parseFloat(selectedTime);
 
-    if (isNaN(distance) || isNaN(time)) {
-      console.error('Distance and time must be numbers');
+    if (isNaN(distance) || totalMinutes === 0) {
+      console.error('Distance must be a number and time must be greater than 0');
       return;
     }
+
+    const pace = totalMinutes / distance;
 
     const newEntry = {
       id: Date.now(),
       date: now.toISOString(),
       distance,
-      time,
+      time: totalMinutes / 60,
+      pace: pace.toFixed(2),
     };
 
     addRunEntry(newEntry);
     setSelectedHours('');
     setSelectedMinutes('0'); // Reset to default
     setSelectedDistance('');
-    setSelectedTime('');
   };
 
   const handleClear = () => {
@@ -44,7 +44,6 @@ function MoodTracker() {
       setSelectedHours('');
       setSelectedMinutes('0'); // Reset to default
       setSelectedDistance('');
-      setSelectedTime('');
     }
   };
 
@@ -79,16 +78,6 @@ function MoodTracker() {
             id="distance"
             value={selectedDistance}
             onChange={(e) => setSelectedDistance(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </div>
-        <div>
-          <label htmlFor="time" className="block text-sm font-medium text-gray-700">Time (hours)</label>
-          <input
-            type="number"
-            id="time"
-            value={selectedTime}
-            onChange={(e) => setSelectedTime(e.target.value)}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />
         </div>
