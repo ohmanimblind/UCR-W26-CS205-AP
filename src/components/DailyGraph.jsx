@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useHealthData } from '../context/HealthDataContext';
 
 function DailyGraph() {
   const { monthlyGoal, totalDistanceThisMonth, setMonthlyGoal, runEntries } = useHealthData();
   const [newMonthlyGoal, setNewMonthlyGoal] = useState(monthlyGoal);
+  const [recommendedRun, setRecommendedRun] = useState(null);
 
   const handleMonthlyGoalChange = (e) => {
     setNewMonthlyGoal(e.target.value);
@@ -81,6 +82,26 @@ function DailyGraph() {
     return fastestPace !== Infinity ? fastestPace.toFixed(2) : 'No runs this week';
   }, [runEntries]);
 
+  // Check for runs in the past 3 days
+  useEffect(() => {
+    const now = new Date();
+    const threeDaysAgo = new Date(now);
+    threeDaysAgo.setDate(now.getDate() - 3);
+
+    const recentEntries = runEntries.filter(entry => {
+      const entryDate = new Date(entry.date);
+      return entryDate >= threeDaysAgo;
+    });
+
+    if (recentEntries.length === 0) {
+      const recommendedDistance = monthlyGoal / 20;
+      const recommendedPace = 9; // 9 minutes per mile
+      setRecommendedRun({ distance: recommendedDistance, pace: recommendedPace });
+    } else {
+      setRecommendedRun(null);
+    }
+  }, [runEntries, monthlyGoal]);
+
   return (
     <div className="mt-8">
       <h3 className="text-xl font-bold mb-2">Monthly Goal</h3>
@@ -120,6 +141,13 @@ function DailyGraph() {
         <h3 className="text-xl font-bold mb-2">Fastest Pace of the Week</h3>
         <p>{fastestPaceThisWeek} miles per hour</p>
       </div>
+      {recommendedRun && (
+        <div className="mt-8">
+          <h3 className="text-xl font-bold mb-2">Recommended Run</h3>
+          <p>Distance: {recommendedRun.distance.toFixed(2)} miles</p>
+          <p>Pace: {recommendedRun.pace} minutes per mile</p>
+        </div>
+      )}
     </div>
   );
 }
