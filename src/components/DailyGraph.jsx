@@ -148,16 +148,21 @@ function DailyGraph() {
       <p>Goal: {monthlyGoal} miles</p>
       <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
       <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
-      <progress
-        value={totalDistanceThisMonth}
-        max={monthlyGoal}
-        className="w-full h-2 bg-gray-200 rounded overflow-hidden mt-2"
-      >
-        <div
-          className="h-full bg-blue-500"
-          style={{ width: `${(totalDistanceThisMonth / monthlyGoal) * 100}%` }}
-        ></div>
-      </progress>
+      <div className="w-1/4 mt-2">
+        <progress
+          value={totalDistanceThisMonth}
+          max={monthlyGoal}
+          className="w-full h-2 bg-gray-200 rounded overflow-hidden"
+        >
+          <div
+            className="h-full bg-blue-500"
+            style={{ width: `${(totalDistanceThisMonth / monthlyGoal) * 100}%` }}
+          ></div>
+        </progress>
+        <p className="mt-1 text-sm">
+          {((totalDistanceThisMonth / monthlyGoal) * 100).toFixed(2)}% complete
+        </p>
+      </div>
       <div className="mt-4">
         <input
           type="number"
