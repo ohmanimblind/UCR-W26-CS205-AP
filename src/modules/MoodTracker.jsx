@@ -7,7 +7,9 @@ function MoodTracker() {
   const [selectedMinutes, setSelectedMinutes] = useState('');
   const [selectedDistance, setSelectedDistance] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+
     if (!selectedMinutes || !selectedDistance) return;
 
     const now = new Date();
