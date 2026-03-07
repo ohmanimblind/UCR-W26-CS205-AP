@@ -169,6 +169,7 @@ export function HealthDataProvider({ children }) {
         setupFileHandle,
         loadFromFile,
         totalDistanceThisMonth,
+        setMonthlyGoal,
       }}
     >
       {children}
