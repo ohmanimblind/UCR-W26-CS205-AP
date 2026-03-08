@@ -13,7 +13,15 @@ function App() {
       <div className="min-h-screen bg-transparent">
         <div className="container mx-auto px-4 py-8 max-w-7xl">
           <header className="mb-8 flex justify-between items-center">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Your Pretty Derby! : Run Tracker</h1>
+          {/* 1. Moved the gradient to the background box */}
+          <div className="bg-gradient-to-r from-derby-green to-yellow-400 px-4 py-2 rounded-lg shadow-md mb-2 mr-4 w-max">
+  
+  {/* 2. Changed text to solid white and removed the clip-text classes */}
+            <h1 className="text-4xl font-bold text-white whitespace-nowrap [-webkit-text-stroke:1px_gray]">
+              Your Pretty Derby! : Run Tracker
+            </h1>
+
+            </div>
             <nav className="flex space-x-4">
               <button
                 onClick={() => setActiveTab('dashboard')}
@@ -35,7 +43,7 @@ function App() {
               </button>
               <button
                 onClick={() => setActiveTab('file')}
-                className={`px-4 py-2 rounded ${activeTab === 'file' ? 'bg-derby-green text-white' : 'bg-gray-200 text-gray-800'}`}
+                className={`px-4 py-2 rounded  mr-4 ${activeTab === 'file' ? 'bg-derby-green text-white' : 'bg-gray-200 text-gray-800'}`}
               >
                 File
               </button>

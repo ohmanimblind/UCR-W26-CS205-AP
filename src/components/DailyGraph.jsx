@@ -149,7 +149,7 @@ function DailyGraph() {
         <p>Goal: {monthlyGoal} miles</p>
         <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
         <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
-        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 p-4 bg-derby-green shadow-lg">
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 p-4 bg-gradient-to-r from-derby-green to-yellow-400 rounded-lg shadow-lg">
           <div className="w-full mt-2 relative">
     
             {/* 1. The Background Track (Gray) */}
@@ -165,10 +165,10 @@ function DailyGraph() {
 
     {/* 3. Your Agnes Icon Slider */}
             <div
-              className="absolute top-0 w-7 h-7 rounded-full transform -translate-x-1/2 -translate-y-2.5" 
+              className="absolute top-0 w-11 h-11 rounded-full transform -translate-x-1/2 -translate-y-3.5" 
               style={{ 
                 left: `${(totalDistanceThisMonth / monthlyGoal) * 100}%`, 
-                backgroundImage: 'url(/agnes.png)', 
+                backgroundImage: 'url(/goldshi.png)', 
                 backgroundSize: 'cover' 
               }}
             ></div>
