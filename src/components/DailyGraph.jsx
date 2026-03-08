@@ -21,7 +21,8 @@ function DailyGraph() {
   const fastestPaceThisMonth = useMemo(() => {
     const now = new Date();
     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    // FIXED: Added 23, 59, 59 to capture the entire final day of the month
+    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
 
     const filteredEntries = runEntries.filter(entry => {
       const entryDate = new Date(entry.date);
@@ -32,7 +33,8 @@ function DailyGraph() {
 
     const initialMinPace = Infinity;
     const fastestPace = filteredEntries.reduce((minPace, entry) => {
-      const pace = entry.pace;
+      // FIXED: Added parseFloat to ensure accurate math
+      const pace = parseFloat(entry.pace);
       return pace < minPace ? pace : minPace;
     }, initialMinPace);
 
@@ -43,7 +45,8 @@ function DailyGraph() {
   const longestRunThisMonth = useMemo(() => {
     const now = new Date();
     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    // FIXED: Added 23, 59, 59 to capture the entire final day of the month
+    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
 
     const filteredEntries = runEntries.filter(entry => {
       const entryDate = new Date(entry.date);
@@ -60,13 +63,22 @@ function DailyGraph() {
     return typeof longestRun === 'number' && !isNaN(longestRun) ? longestRun.toFixed(2) : 'No runs this month';
   }, [runEntries]);
 
-  // Calculate fastest pace of the week
+// Calculate fastest pace of the week (Monday through Sunday)
   const fastestPaceThisWeek = useMemo(() => {
     const now = new Date();
-    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
-    const endOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 6);
+    
+    // Shift the days so Monday is 0 and Sunday is 6
+    const dayOfWeek = now.getDay() === 0 ? 6 : now.getDay() - 1;
+    
+    // Start of week: Monday at 00:00:00
+    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek, 0, 0, 0);
+    
+    // End of week: Sunday at 23:59:59
+    const endOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek + 6, 23, 59, 59);
 
     const filteredEntries = runEntries.filter(entry => {
+      // NOTE: If your dates are saving like "2024-03-08" instead of full timestamps, 
+      // replace the line below with: const entryDate = new Date(entry.date + 'T12:00:00');
       const entryDate = new Date(entry.date);
       return entryDate >= startOfWeek && entryDate <= endOfWeek;
     });
@@ -75,7 +87,7 @@ function DailyGraph() {
 
     const initialMinPace = Infinity;
     const fastestPace = filteredEntries.reduce((minPace, entry) => {
-      const pace = entry.pace;
+      const pace = parseFloat(entry.pace);
       return pace < minPace ? pace : minPace;
     }, initialMinPace);
 
@@ -229,7 +241,9 @@ function DailyGraph() {
         <div className="mt-8  p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
           <h3 className="text-xl font-bold mb-2">Running Streak</h3>
           <p>Streak: {streak} weeks</p>
-          <p>Grade: {calculateGrade} !</p>
+          <p className="text-5xl font-black text-white italic tracking-tighter drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] [text-shadow:_2px_2px_0px_#000]">
+          Grade: <span className="text-6xl uppercase">{calculateGrade}</span>!
+          </p>
         </div>
         {recommendedRun && (
           <div className="mt-8  p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
