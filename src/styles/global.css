@@ -1,0 +1,14 @@
+/* src/styles/global.css */
+.monthly-goal {
+  background-color: #f0f8ff; /* Lighter blue background */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.fastest-pace {
+  background-color: #e6e6fa; /* Lavender background */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
