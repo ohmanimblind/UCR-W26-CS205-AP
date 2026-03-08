@@ -149,23 +149,32 @@ function DailyGraph() {
         <p>Goal: {monthlyGoal} miles</p>
         <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
         <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
-        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 p-4 bg-white shadow-lg">
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 p-4 bg-derby-green shadow-lg">
           <div className="w-full mt-2 relative">
-            <progress
-              value={totalDistanceThisMonth}
-              max={monthlyGoal}
-              className="w-full h-2 bg-gray-200 rounded overflow-hidden"
-            >
+    
+            {/* 1. The Background Track (Gray) */}
+            <div className="w-full h-2 bg-gray-200 rounded overflow-hidden">
+      
+              {/* 2. The Yellow Progress Fill */}
               <div
-                className="h-full bg-green-500"
+                className="h-full bg-yellow-400"
                 style={{ width: `${(totalDistanceThisMonth / monthlyGoal) * 100}%` }}
               ></div>
-            </progress>
+
+            </div>
+
+    {/* 3. Your Agnes Icon Slider */}
             <div
-              className="absolute top-0 left-0 w-7 h-7 bg-green-500 rounded-full"
-              style={{ left: `${(totalDistanceThisMonth / monthlyGoal) * 100}%`, backgroundImage: 'url(/agnes.png)', backgroundSize: 'cover' }}
+              className="absolute top-0 w-7 h-7 rounded-full transform -translate-x-1/2 -translate-y-2.5" 
+              style={{ 
+                left: `${(totalDistanceThisMonth / monthlyGoal) * 100}%`, 
+                backgroundImage: 'url(/agnes.png)', 
+                backgroundSize: 'cover' 
+              }}
             ></div>
-            <p className="mt-1 text-sm">
+
+    {/* 4. The Percentage Text */}
+            <p className="mt-1 text-sm text-white font-bold">
               {((totalDistanceThisMonth / monthlyGoal) * 100).toFixed(2)}% complete
             </p>
           </div>
@@ -177,7 +186,7 @@ function DailyGraph() {
             onChange={handleMonthlyGoalChange}
             className="border p-2"
           />
-          <button onClick={handleSaveMonthlyGoal} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
+          <button onClick={handleSaveMonthlyGoal} className="ml-2 px-4 py-2 bg-derby-green text-white rounded">
             Save Goal
           </button>
         </div>

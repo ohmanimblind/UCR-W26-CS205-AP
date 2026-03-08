@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      colors:{
+          'derby-green': '#54c472',
+      },
       backgroundImage: {
         'background': "url('/possible_wallpaper.jpg')",
       }

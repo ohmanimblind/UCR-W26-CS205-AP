@@ -66,7 +66,7 @@ function MoodTracker() {
           onChange={(e) => setSelectedDistance(e.target.value)}
           className="p-2 border border-gray-300 rounded"
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        <button type="submit" className="bg-derby-green text-white p-2 rounded">
           Add Run
         </button>
         <button type="button" onClick={handleClear} className="bg-red-500 text-white p-2 rounded">

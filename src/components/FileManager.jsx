@@ -69,7 +69,7 @@ function FileManager() {
     <div>
       <h2 className="text-2xl font-bold mb-4">File Management</h2>
       <div className="mb-4">
-        <button onClick={handleExport} className="bg-blue-500 text-white p-2 rounded">
+        <button onClick={handleExport} className="bg-derby-green text-white p-2 rounded">
           Export Data
         </button>
       </div>
@@ -89,7 +89,7 @@ function FileManager() {
         />
       </div>
       <div className="mb-4">
-        <button onClick={handleImport} className="bg-blue-500 text-white p-2 rounded">
+        <button onClick={handleImport} className="bg-derby-green text-white p-2 rounded">
           Import Data
         </button>
       </div>
