@@ -178,6 +178,11 @@ function DailyGraph() {
               {((totalDistanceThisMonth / monthlyGoal) * 100).toFixed(2)}% complete
             </p>
           </div>
+          {/* 5. The Finish Line Icon */}
+          <div
+            className="absolute top-0 right-0 w-12 h-12 rounded-full transform -translate-y-5 translate-x-1/2"
+            style={{ backgroundImage: 'url(/finish_line.png)', backgroundSize: 'cover' }}
+          ></div> 
         </div>
         <div className="mt-4">
           <input
