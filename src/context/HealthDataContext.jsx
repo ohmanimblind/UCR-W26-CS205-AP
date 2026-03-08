@@ -6,7 +6,7 @@ const HealthDataContext = createContext();
 
 export function HealthDataProvider({ children }) {
   const [runEntries, setRunEntries] = useState([]);
-  const [monthlyGoal, setMonthlyGoal] = useState(0);
+  const [monthlyGoal, setMonthlyGoal] = useState(20); // Initialize monthlyGoal to 20
   const [isLoaded, setIsLoaded] = useState(false);
   const [fileHandle, setFileHandle] = useState(null);
   const [fileStatus, setFileStatus] = useState('none'); // 'none', 'saving', 'saved', 'error'
@@ -19,7 +19,7 @@ export function HealthDataProvider({ children }) {
       const loaded = loadData();
       console.log('Loaded data:', loaded);
       setRunEntries(loaded.runEntries);
-      setMonthlyGoal(loaded.monthlyGoal || 0);
+      setMonthlyGoal(loaded.monthlyGoal || 20); // Use 20 as default if no data is loaded
       setIsLoaded(true);
 
       // Try to set up file auto-save
@@ -145,7 +145,6 @@ export function HealthDataProvider({ children }) {
       const entryDate = new Date(entry.date);
       if (entryDate >= firstDayOfMonth && entryDate <= lastDayOfMonth) {
         return total + parseFloat(entry.distance);
-      
       }
       return total;
     }, 0);
