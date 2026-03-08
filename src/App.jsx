@@ -4,18 +4,16 @@ import DailyGraph from './components/DailyGraph';
 import MoodTracker from './modules/MoodTracker';
 import HistoryView from './components/HistoryView';
 import FileManager from './components/FileManager';
-import { useHealthData } from './context/HealthDataContext';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const { monthlyGoal, fastestPace } = useHealthData();
 
   return (
     <HealthDataProvider>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-transparent">
         <div className="container mx-auto px-4 py-8 max-w-7xl">
           <header className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2 bg-blue-100 p-4 rounded">Your Pretty Derby!: Run Tacker</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">Your Pretty Derby! : Run Tacker</h1>
             <nav className="flex space-x-4">
               <button
                 onClick={() => setActiveTab('dashboard')}
@@ -44,19 +42,7 @@ function App() {
             </nav>
           </header>
           <main>
-            {activeTab === 'dashboard' && (
-              <div>
-                <div className="monthly-goal bg-blue-100 p-4 rounded mb-4">
-                  <h2 className="text-xl font-bold text-gray-800">Monthly Goal</h2>
-                  <p className="text-gray-600">Your monthly goal is {monthlyGoal} miles.</p>
-                </div>
-                <div className="fastest-pace bg-lavender p-4 rounded mb-4">
-                  <h2 className="text-xl font-bold text-gray-800">Fastest Pace of the Month</h2>
-                  <p className="text-gray-600">Your fastest pace is {fastestPace} minutes per mile.</p>
-                </div>
-                <DailyGraph />
-              </div>
-            )}
+            {activeTab === 'dashboard' && <DailyGraph />}
             {activeTab === 'log-run' && <MoodTracker />}
             {activeTab === 'history' && <HistoryView />}
             {activeTab === 'file' && <FileManager />}
