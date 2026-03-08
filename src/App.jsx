@@ -23,30 +23,34 @@ function App() {
 
             </div>
             <nav className="flex space-x-4">
-              <button
-                onClick={() => setActiveTab('dashboard')}
-                className={`px-4 py-2 rounded ${activeTab === 'dashboard' ? 'bg-derby-green text-white' : 'bg-gray-200 text-gray-800'}`}
-              >
-                Dashboard
-              </button>
-              <button
-                onClick={() => setActiveTab('log-run')}
-                className={`px-4 py-2 rounded ${activeTab === 'log-run' ? 'bg-derby-green text-white' : 'bg-gray-200 text-gray-800'}`}
-              >
-                Log Run
-              </button>
-              <button
-                onClick={() => setActiveTab('history')}
-                className={`px-4 py-2 rounded ${activeTab === 'history' ? 'bg-derby-green text-white' : 'bg-gray-200 text-gray-800'}`}
-              >
-                History
-              </button>
-              <button
-                onClick={() => setActiveTab('file')}
-                className={`px-4 py-2 rounded  mr-4 ${activeTab === 'file' ? 'bg-derby-green text-white' : 'bg-gray-200 text-gray-800'}`}
-              >
-                File
-              </button>
+{['dashboard', 'log-run', 'history', 'file'].map((tab) => (
+    <button
+      key={tab}
+      onClick={() => setActiveTab(tab)}
+      className={`relative px-6 py-2 rounded-lg font-black italic tracking-tight uppercase transition-all duration-300 border-2 overflow-hidden
+        ${activeTab === tab 
+          ? 'text-white border-derby-green scale-105 shadow-lg' 
+          : 'text-gray-700 border-gray-300 opacity-70 hover:opacity-100 hover:scale-105'
+        }`}
+    >
+      {/* 1. The Checkered Layer with Gradient Mask */}
+      <div 
+        className={`absolute inset-0 z-0 
+          ${activeTab === tab 
+            ? '[background-image:conic-gradient(#fff_25%,#059669_0_50%,#fff_0_75%,#059669_0)]' 
+            : '[background-image:conic-gradient(#fff_25%,#000_0_50%,#fff_0_75%,#000_0)]'
+          } 
+          [background-size:10px_10px] 
+          [mask-image:linear-gradient(to_bottom,transparent_70%,black_100%)]
+          [-webkit-mask-image:linear-gradient(to_bottom,transparent_70%,black_100%)]`}
+      />
+
+      {/* 2. The Text Label (Layered on top of the checkers) */}
+      <span className="relative z-10 [text-shadow:_1px_1px_2px_#000]">
+        {tab.replace('-', ' ')}
+      </span>
+    </button>
+  ))}
             </nav>
             <img src="/Uma_Musume_Pretty_Derby_JP_Logo.png" alt="Uma Musume Pretty Derby Logo" className="h-20" />
           </header>
