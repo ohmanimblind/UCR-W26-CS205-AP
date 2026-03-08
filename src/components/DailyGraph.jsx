@@ -149,7 +149,7 @@ function DailyGraph() {
         <p>Goal: {monthlyGoal} miles</p>
         <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
         <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
-        <div className="fixed top-0 right-0 w-1/4 p-4 bg-white shadow-lg">
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 p-4 bg-white shadow-lg">
           <div className="w-full mt-2 relative">
             <progress
               value={totalDistanceThisMonth}
