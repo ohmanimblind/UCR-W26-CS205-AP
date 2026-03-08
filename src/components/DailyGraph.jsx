@@ -161,7 +161,7 @@ function DailyGraph() {
             ></div>
           </progress>
           <div
-            className="absolute top-0 left-0 w-2 h-2 bg-blue-500 rounded-full"
+            className="absolute top-0 left-0 w-4 h-4 bg-blue-500 rounded-full"
             style={{ left: `${(totalDistanceThisMonth / monthlyGoal) * 100}%`, backgroundImage: 'url(/agnes.png)', backgroundSize: 'cover' }}
           ></div>
           <p className="mt-1 text-sm">
