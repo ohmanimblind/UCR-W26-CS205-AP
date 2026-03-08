@@ -143,83 +143,87 @@ function DailyGraph() {
   }, [runEntries, monthlyGoal, baselineDistance, tempoPace]);
 
   return (
-    <div className="mt-8">
-      <h3 className="text-xl font-bold mb-2">Monthly Goal</h3>
-      <p>Goal: {monthlyGoal} miles</p>
-      <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
-      <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
-      <div className="fixed top-0 right-0 w-1/4 p-4 bg-white shadow-lg">
-        <div className="w-full mt-2 relative">
-          <progress
-            value={totalDistanceThisMonth}
-            max={monthlyGoal}
-            className="w-full h-2 bg-gray-200 rounded overflow-hidden"
-          >
+    <div className="mt-8 flex">
+      <div className="w-3/4">
+        <h3 className="text-xl font-bold mb-2">Monthly Goal</h3>
+        <p>Goal: {monthlyGoal} miles</p>
+        <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
+        <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
+        <div className="fixed top-0 right-0 w-1/4 p-4 bg-white shadow-lg">
+          <div className="w-full mt-2 relative">
+            <progress
+              value={totalDistanceThisMonth}
+              max={monthlyGoal}
+              className="w-full h-2 bg-gray-200 rounded overflow-hidden"
+            >
+              <div
+                className="h-full bg-green-500"
+                style={{ width: `${(totalDistanceThisMonth / monthlyGoal) * 100}%` }}
+              ></div>
+            </progress>
             <div
-              className="h-full bg-green-500"
-              style={{ width: `${(totalDistanceThisMonth / monthlyGoal) * 100}%` }}
+              className="absolute top-0 left-0 w-7 h-7 bg-green-500 rounded-full"
+              style={{ left: `${(totalDistanceThisMonth / monthlyGoal) * 100}%`, backgroundImage: 'url(/agnes.png)', backgroundSize: 'cover' }}
             ></div>
-          </progress>
-          <div
-            className="absolute top-0 left-0 w-7 h-7 bg-green-500 rounded-full"
-            style={{ left: `${(totalDistanceThisMonth / monthlyGoal) * 100}%`, backgroundImage: 'url(/agnes.png)', backgroundSize: 'cover' }}
-          ></div>
-          <p className="mt-1 text-sm">
-            {((totalDistanceThisMonth / monthlyGoal) * 100).toFixed(2)}% complete
-          </p>
+            <p className="mt-1 text-sm">
+              {((totalDistanceThisMonth / monthlyGoal) * 100).toFixed(2)}% complete
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="mt-4">
-        <input
-          type="number"
-          value={newMonthlyGoal}
-          onChange={handleMonthlyGoalChange}
-          className="border p-2"
-        />
-        <button onClick={handleSaveMonthlyGoal} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
-          Save Goal
-        </button>
-      </div>
-      <div className="mt-8">
-        <h3 className="text-xl font-bold mb-2">Fastest Pace of the Month</h3>
-        {fastestPaceThisMonth !== 'No runs this month' && (
-          <p>{fastestPaceThisMonth} miles per hour</p>
-        )}
-        {fastestPaceThisMonth === 'No runs this month' && (
-          <p>{fastestPaceThisMonth}</p>
-        )}
-      </div>
-      <div className="mt-8">
-        <h3 className="text-xl font-bold mb-2">Longest Run of the Month</h3>
-        {longestRunThisMonth !== 'No runs this month' && (
-          <p>{longestRunThisMonth} miles</p>
-        )}
-        {longestRunThisMonth === 'No runs this month' && (
-          <p>{longestRunThisMonth}</p>
-        )}
-      </div>
-      <div className="mt-8">
-        <h3 className="text-xl font-bold mb-2">Fastest Pace of the Week</h3>
-        {fastestPaceThisWeek !== 'No runs this week' && (
-          <p>{fastestPaceThisWeek} miles per hour</p>
-        )}
-        {fastestPaceThisWeek === 'No runs this week' && (
-          <p>{fastestPaceThisWeek}</p>
-        )}
-      </div>
-      <div className="mt-8">
-        <h3 className="text-xl font-bold mb-2">Running Streak</h3>
-        <p>Streak: {streak} weeks</p>
-        <p>Grade: {calculateGrade}</p>
-      </div>
-      {recommendedRun && (
+        <div className="mt-4">
+          <input
+            type="number"
+            value={newMonthlyGoal}
+            onChange={handleMonthlyGoalChange}
+            className="border p-2"
+          />
+          <button onClick={handleSaveMonthlyGoal} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
+            Save Goal
+          </button>
+        </div>
         <div className="mt-8">
-          <h3 className="text-xl font-bold mb-2">Recommended Run</h3>
-          <p>Distance: {recommendedRun.distance.toFixed(2)} miles</p>
-          <p>Pace: {recommendedRun.pace} minutes per mile</p>
-          <p>{recommendedRun.message}</p>
+          <h3 className="text-xl font-bold mb-2">Fastest Pace of the Month</h3>
+          {fastestPaceThisMonth !== 'No runs this month' && (
+            <p>{fastestPaceThisMonth} miles per hour</p>
+          )}
+          {fastestPaceThisMonth === 'No runs this month' && (
+            <p>{fastestPaceThisMonth}</p>
+          )}
         </div>
-      )}
+        <div className="mt-8">
+          <h3 className="text-xl font-bold mb-2">Longest Run of the Month</h3>
+          {longestRunThisMonth !== 'No runs this month' && (
+            <p>{longestRunThisMonth} miles</p>
+          )}
+          {longestRunThisMonth === 'No runs this month' && (
+            <p>{longestRunThisMonth}</p>
+          )}
+        </div>
+        <div className="mt-8">
+          <h3 className="text-xl font-bold mb-2">Fastest Pace of the Week</h3>
+          {fastestPaceThisWeek !== 'No runs this week' && (
+            <p>{fastestPaceThisWeek} miles per hour</p>
+          )}
+          {fastestPaceThisWeek === 'No runs this week' && (
+            <p>{fastestPaceThisWeek}</p>
+          )}
+        </div>
+      </div>
+      <div className="w-1/4">
+        <div className="mt-8">
+          <h3 className="text-xl font-bold mb-2">Running Streak</h3>
+          <p>Streak: {streak} weeks</p>
+          <p>Grade: {calculateGrade}</p>
+        </div>
+        {recommendedRun && (
+          <div className="mt-8">
+            <h3 className="text-xl font-bold mb-2">Recommended Run</h3>
+            <p>Distance: {recommendedRun.distance.toFixed(2)} miles</p>
+            <p>Pace: {recommendedRun.pace} minutes per mile</p>
+            <p>{recommendedRun.message}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
