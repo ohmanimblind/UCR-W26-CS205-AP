@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useHealthData } from '../context/HealthDataContext';
 
 function DailyGraph() {
-  const { monthlyGoal, totalDistanceThisMonth, setMonthlyGoal, runEntries } = useHealthData();
+  const { monthlyGoal, totalDistanceThisMonth, setMonthlyGoal, runEntries, streak, calculateGrade } = useHealthData();
   const [newMonthlyGoal, setNewMonthlyGoal] = useState(monthlyGoal);
   const [recommendedRun, setRecommendedRun] = useState(null);
 
@@ -206,6 +206,11 @@ function DailyGraph() {
         {fastestPaceThisWeek === 'No runs this week' && (
           <p>{fastestPaceThisWeek}</p>
         )}
+      </div>
+      <div className="mt-8">
+        <h3 className="text-xl font-bold mb-2">Running Streak</h3>
+        <p>Streak: {streak} weeks</p>
+        <p>Grade: {calculateGrade}</p>
       </div>
       {recommendedRun && (
         <div className="mt-8">

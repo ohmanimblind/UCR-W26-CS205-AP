@@ -11,6 +11,7 @@ export function HealthDataProvider({ children }) {
   const [fileHandle, setFileHandle] = useState(null);
   const [fileStatus, setFileStatus] = useState('none'); // 'none', 'saving', 'saved', 'error'
   const fileHandleRef = useRef(null);
+  const [streak, setStreak] = useState(0); // Initialize streak to 0
 
   // Load data on startup
   useEffect(() => {
@@ -20,6 +21,7 @@ export function HealthDataProvider({ children }) {
       console.log('Loaded data:', loaded);
       setRunEntries(loaded.runEntries);
       setMonthlyGoal(loaded.monthlyGoal || 20); // Use 20 as default if no data is loaded
+      setStreak(loaded.streak || 0); // Load streak from localStorage
       setIsLoaded(true);
 
       // Try to set up file auto-save
@@ -47,7 +49,8 @@ export function HealthDataProvider({ children }) {
     const success = await writeFile(handle, {
       runEntries,
       monthlyGoal,
-      lastSaved: new Date().toISOString()
+      lastSaved: new Date().toISOString(),
+      streak, // Save streak to file
     });
 
     if (success) {
@@ -86,6 +89,9 @@ export function HealthDataProvider({ children }) {
       if (data?.monthlyGoal) {
         setMonthlyGoal(data.monthlyGoal);
       }
+      if (data?.streak) {
+        setStreak(data.streak);
+      }
     }
   }
 
@@ -93,6 +99,7 @@ export function HealthDataProvider({ children }) {
   const addRunEntry = (entry) => {
     console.log('Adding run entry:', entry);
     setRunEntries([...runEntries, entry]);
+    resetStreak(); // Reset streak when a new run is added
   };
 
   // Delete a run entry
@@ -113,6 +120,7 @@ export function HealthDataProvider({ children }) {
       runEntries,
       monthlyGoal,
       exportedAt: new Date().toISOString(),
+      streak, // Include streak in export
     };
     return JSON.stringify(data, null, 2);
   };
@@ -127,6 +135,9 @@ export function HealthDataProvider({ children }) {
       }
       if (data.monthlyGoal) {
         setMonthlyGoal(data.monthlyGoal);
+      }
+      if (data.streak) {
+        setStreak(data.streak);
       }
       return true;
     } catch (error) {
@@ -153,6 +164,20 @@ export function HealthDataProvider({ children }) {
     return total;
   }, [runEntries]);
 
+  // Reset streak when a new run is added
+  const resetStreak = () => {
+    setStreak(1); // Reset streak to 1 when a new run is added
+  };
+
+  // Calculate grade based on streak
+  const calculateGrade = useMemo(() => {
+    if (streak <= 8) return 'D';
+    if (streak <= 16) return 'C';
+    if (streak <= 24) return 'B';
+    if (streak <= 36) return 'A';
+    return 'S';
+  }, [streak]);
+
   return (
     <HealthDataContext.Provider
       value={{
@@ -170,6 +195,8 @@ export function HealthDataProvider({ children }) {
         loadFromFile,
         totalDistanceThisMonth,
         setMonthlyGoal,
+        streak,
+        calculateGrade,
       }}
     >
       {children}
