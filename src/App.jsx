@@ -13,7 +13,7 @@ function App() {
       <div className="min-h-screen bg-transparent">
         <div className="container mx-auto px-4 py-8 max-w-7xl">
           <header className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Your Pretty Derby! : Run Tacker</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">Your Pretty Derby! : Run Tracker</h1>
             <nav className="flex space-x-4">
               <button
                 onClick={() => setActiveTab('dashboard')}
