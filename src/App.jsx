@@ -18,7 +18,7 @@ function App() {
   
   {/* 2. Changed text to solid white and removed the clip-text classes */}
             <h1 className="text-4xl font-bold text-white whitespace-nowrap [-webkit-text-stroke:1px_gray]">
-              Your Pretty Derby! : Run Tracker
+              <p className="italic">Your Pretty Derby! : Run Tracker</p>
             </h1>
 
             </div>

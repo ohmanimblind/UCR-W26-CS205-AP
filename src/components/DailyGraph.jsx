@@ -143,12 +143,14 @@ function DailyGraph() {
   }, [runEntries, monthlyGoal, baselineDistance, tempoPace]);
 
   return (
-    <div className="mt-8 flex">
+    <div className="mt-8 flex p-4 rounded-lg">
       <div className="w-3/4">
-        <h3 className="text-xl font-bold mb-2">Monthly Goal</h3>
-        <p>Goal: {monthlyGoal} miles</p>
-        <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
-        <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
+        <div className="  p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
+          <h3 className="text-xl font-bold mb-2">Monthly Goal</h3>
+          <p>Goal: {monthlyGoal} miles</p>
+          <p>Progress: {(typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth.toFixed(2) : '0.00')} miles</p>
+          <p>Remaining: {(monthlyGoal - (typeof totalDistanceThisMonth === 'number' ? totalDistanceThisMonth : 0)).toFixed(2)} miles</p>
+        </div>
         <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 p-4 bg-gradient-to-r from-derby-green to-yellow-400 rounded-lg shadow-lg">
           <div className="w-full mt-2 relative">
     
@@ -184,7 +186,7 @@ function DailyGraph() {
             style={{ backgroundImage: 'url(/finish_line.png)', backgroundSize: 'cover' }}
           ></div> 
         </div>
-        <div className="mt-4">
+        <div className="mt-4 p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
           <input
             type="number"
             value={newMonthlyGoal}
@@ -195,7 +197,7 @@ function DailyGraph() {
             Save Goal
           </button>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
           <h3 className="text-xl font-bold mb-2">Fastest Pace of the Month</h3>
           {fastestPaceThisMonth !== 'No runs this month' && (
             <p>{fastestPaceThisMonth} miles per hour</p>
@@ -204,7 +206,7 @@ function DailyGraph() {
             <p>{fastestPaceThisMonth}</p>
           )}
         </div>
-        <div className="mt-8">
+        <div className="mt-8 p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
           <h3 className="text-xl font-bold mb-2">Longest Run of the Month</h3>
           {longestRunThisMonth !== 'No runs this month' && (
             <p>{longestRunThisMonth} miles</p>
@@ -213,7 +215,7 @@ function DailyGraph() {
             <p>{longestRunThisMonth}</p>
           )}
         </div>
-        <div className="mt-8">
+        <div className="mt-8 p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
           <h3 className="text-xl font-bold mb-2">Fastest Pace of the Week</h3>
           {fastestPaceThisWeek !== 'No runs this week' && (
             <p>{fastestPaceThisWeek} miles per hour</p>
@@ -224,13 +226,13 @@ function DailyGraph() {
         </div>
       </div>
       <div className="w-1/4">
-        <div className="mt-8">
+        <div className="mt-8  p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
           <h3 className="text-xl font-bold mb-2">Running Streak</h3>
           <p>Streak: {streak} weeks</p>
-          <p>Grade: {calculateGrade}</p>
+          <p>Grade: {calculateGrade} !</p>
         </div>
         {recommendedRun && (
-          <div className="mt-8">
+          <div className="mt-8  p-4 rounded-lg border border-white/60 bg-gradient-to-b from-white/80 to-derby-green/60 shadow-lg backdrop-blur-sm w-fit">
             <h3 className="text-xl font-bold mb-2">Recommended Run</h3>
             <p>Distance: {recommendedRun.distance.toFixed(2)} miles</p>
             <p>Pace: {recommendedRun.pace} minutes per mile</p>

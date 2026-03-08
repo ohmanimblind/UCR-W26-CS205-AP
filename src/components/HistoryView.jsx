@@ -9,7 +9,7 @@ function HistoryView() {
   }, [runEntries]);
 
   return (
-    <div>
+    <div className="bg-gradient-to-b from-white to-derby-green round-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Run History</h2>
       <ul>
         {sortedEntries.map((entry, index) => (
