@@ -179,7 +179,7 @@ function DailyGraph() {
 
     {/* 3. Your Agnes Icon Slider */}
             <div
-              className="absolute top-0 w-11 h-11 rounded-full transform -translate-x-1/2 -translate-y-3.5" 
+              className="absolute top-0 w-16 h-16 rounded-full transform -translate-x-1/2 -translate-y-8" 
               style={{ 
                 left: `${(totalDistanceThisMonth / monthlyGoal) * 100}%`, 
                 backgroundImage: 'url(/goldshi.png)', 
