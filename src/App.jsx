@@ -16,6 +16,11 @@ function App() {
           <img src="/silence_suzuka.gif" alt="Silence Suzuka GIF" className="h-32 mt-4" />
           <img src="/fox.gif" alt="Fox GIF" className="h-32 mt-4" />
         </div>
+        <div className="absolute right-0 top-0 z-0">
+          <img src="/gold_ship.gif" alt="Gold Ship GIF" className="h-32" />
+          <img src="/who.gif" alt="Who GIF" className="h-32 mt-4" />
+          <img src="/super_creek.gif" alt="Super Creek GIF" className="h-32 mt-4" />
+        </div>
         <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
           <header className="mb-8 flex justify-between items-center">
             <div className="bg-gradient-to-r from-derby-green to-yellow-400 px-4 py-2 rounded-lg shadow-md mb-2 mr-4 w-max">
