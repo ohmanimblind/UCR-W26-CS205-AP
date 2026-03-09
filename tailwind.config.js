@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+          'derby-green': '#54c472',
+      },
+      backgroundImage: {
+        'background': "url('/possible_wallpaper.jpg')",
+      }
+    },
   },
   plugins: [],
 }

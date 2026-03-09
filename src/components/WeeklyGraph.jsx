@@ -1,49 +1,56 @@
-import { useMemo } from 'react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { useHealthData } from '../context/HealthDataContext'
+import React, { useMemo } from 'react';
+import { useHealthData } from '../context/HealthDataContext';
 
 function WeeklyGraph() {
-  const { moodEntries } = useHealthData()
+  const { runEntries } = useHealthData();
 
   const weeklyData = useMemo(() => {
-    const days = []
-    const today = new Date()
+    const days = [];
+    const today = new Date();
 
     for (let i = 6; i >= 0; i--) {
-      const date = new Date(today)
-      date.setDate(date.getDate() - i)
-      const dateStr = date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' })
-      const dayName = date.toLocaleDateString('en-US', { weekday: 'short' })
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split('T')[0];
 
-      const dayMoods = moodEntries.filter(entry => entry.date === dateStr)
-      const avgMood =
-        dayMoods.length === 0
-          ? 0
-          : dayMoods.reduce((sum, entry) => sum + entry.mood, 0) / dayMoods.length
+      const dailyRuns = runEntries
+        .filter(entry => entry.date === dateStr)
+        .map(entry => ({
+          time: entry.time,
+          distance: entry.distance,
+          pace: entry.pace,
+        }));
 
       days.push({
-        day: dayName,
-        averageMood: Number(avgMood.toFixed(2)),
-      })
+        date: dateStr,
+        runs: dailyRuns,
+      });
     }
 
-    return days
-  }, [moodEntries])
+    return days;
+  }, [runEntries]);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <h3 className="text-xl font-semibold text-gray-800 mb-4">Last 7 Days – Average Mood</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={weeklyData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" />
-          <YAxis domain={[0, 5]} ticks={[0, 1, 2, 3, 4, 5]} />
-          <Tooltip />
-          <Bar dataKey="averageMood" fill="#6366f1" name="Average Mood (1–5)" />
-        </BarChart>
-      </ResponsiveContainer>
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Weekly Run Data</h2>
+      <ul>
+        {weeklyData.map((day, index) => (
+          <li key={index} className="mb-4">
+            <h3 className="text-xl font-bold mb-2">{day.date}</h3>
+            <ul>
+              {day.runs.map((entry, index) => (
+                <li key={index} className="flex justify-between items-center mb-2">
+                  <span>{entry.time}</span>
+                  <span>{entry.distance} miles</span>
+                  <span>{entry.pace.toFixed(2)} min/mile</span>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
-  )
+  );
 }
 
-export default WeeklyGraph
+export default WeeklyGraph;

@@ -1,4 +1,7 @@
 export function getTodayFormatted() {
-  const today = new Date()
-  return today.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' })
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
