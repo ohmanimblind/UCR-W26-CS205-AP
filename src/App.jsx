@@ -64,6 +64,12 @@ function App() {
             {activeTab === 'file' && <FileManager />}
           </main>
         </div>
+        {activeTab !== 'dashboard' && (
+          <div className="absolute bottom-0 left-0 right-0 z-0 flex justify-between">
+            <img src="/log_run.gif" alt="Log Run GIF" className="h-32 border-2 border-gray-300" />
+            <img src="/run_history.gif" alt="Run History GIF" className="h-32 border-2 border-gray-300" />
+          </div>
+        )}
       </div>
     </HealthDataProvider>
   );
