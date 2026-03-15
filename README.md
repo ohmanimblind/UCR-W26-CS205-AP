@@ -1,5 +1,5 @@
-# CS205 Final Project: AI-Assisted Feature Development
-
+# CS205 Final Project: Anthony Padilla
+# netID: apadi089
 ## Overview
 
 For this final project, you will use **AI coding agents** to extend a simple Mood Tracking web application into a more full-featured health and wellness platform. The base app lets users log their mood on a 1-5 scale, view daily/weekly graphs, and import/export data as JSON.
